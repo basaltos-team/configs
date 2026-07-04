@@ -1,4 +1,4 @@
-# basalt-configs
+# configs
 
 Example configurations, fixtures, and machine/profile trees.
 
@@ -12,7 +12,7 @@ Example configurations, fixtures, and machine/profile trees.
 ## Planned Layout
 
 ```text
-basalt-configs/
+configs/
 |-- examples/
 |   |-- minimal/
 |   |-- desktop/
@@ -27,5 +27,5 @@ basalt-configs/
 ## Contracts
 
 - Consumes versioned schemas from `basalt/`.
-- Emits fixtures consumed by `basalt-tests/`, `basalt-docs/`, and the installer.
+- Emits fixtures consumed by `tests/`, `docs/`, and the installer.
 
