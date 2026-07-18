@@ -29,3 +29,12 @@ configs/
 - Consumes versioned schemas from `basalt/`.
 - Emits fixtures consumed by `tests/`, `docs/`, and the installer.
 
+## Validation
+
+From the workspace root, validate changed config fixtures with:
+
+```sh
+cargo run --manifest-path core/Cargo.toml -- validate --config configs/examples/minimal
+```
+
+Use the same command with the affected fixture directory.
