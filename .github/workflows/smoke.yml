@@ -1,0 +1,36 @@
+name: smoke
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate-fixtures:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: configs
+      - uses: actions/checkout@v4
+        with:
+          repository: basaltos-team/core
+          path: core
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Valid configs pass
+        run: |
+          set -eu
+          for dir in ../configs/examples/minimal ../configs/fixtures/valid-* ../configs/fixtures/invalid-pacman-missing-package; do
+            cargo run --quiet -- validate --config "$dir"
+          done
+        working-directory: core
+      - name: Invalid validation fixtures fail
+        run: |
+          set -eu
+          for dir in ../configs/fixtures/invalid-duplicate-domain ../configs/fixtures/invalid-lua-sandbox ../configs/fixtures/invalid-package-version-constraint ../configs/fixtures/invalid-unknown-field; do
+            if cargo run --quiet -- validate --config "$dir"; then
+              echo "expected validation failure: $dir"
+              exit 1
+            fi
+          done
+        working-directory: core
