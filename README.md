@@ -38,3 +38,31 @@ cargo run --manifest-path core/Cargo.toml -- validate --config configs/examples/
 ```
 
 Use the same command with the affected fixture directory.
+
+## Composition
+
+Use `init.lua` for authored configs that should compose helpers, package sets, roles, or machine-specific inputs:
+
+```lua
+local package_sets = require("lib.package_sets")
+
+local pacman = {}
+for _, name in ipairs(package_sets.base) do
+  table.insert(pacman, name)
+end
+
+return {
+  system = {
+    hostname = "basalt-workstation",
+  },
+  packages = {
+    pacman = pacman,
+  },
+  services = {
+    enable = { "sshd" },
+  },
+}
+```
+
+When `init.lua` exists, sibling `.lua` files are modules only when imported by `require`.
+Older split-domain directories without `init.lua` remain valid.
