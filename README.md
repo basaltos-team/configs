@@ -66,3 +66,15 @@ return {
 
 When `init.lua` exists, sibling `.lua` files are modules only when imported by `require`.
 Older split-domain directories without `init.lua` remain valid.
+
+## Workspace Fixture
+
+`fixtures/valid-devenv-workspace` exercises the first generated workspace path:
+
+```sh
+cargo run --manifest-path core/Cargo.toml -- workspace generate \
+  --config configs/fixtures/valid-devenv-workspace \
+  --output /tmp/basalt-workspace-generate-smoke
+```
+
+This writes a deterministic `devenv.nix` for inspection only. It does not run Nix or mutate project directories.
